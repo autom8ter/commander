@@ -36,7 +36,6 @@ var fs = &afero.Afero{
 func Init(c *Context) {
 	rootCmd.Use = c.Name
 	c.Version = c.Version
-	rootCmd.Long = fmt.Sprintf("Context: \n%s\nCurrent Config: \n%s", util.ToPrettyJsonString(c), util.ToPrettyJson(viper.AllSettings()))
 	viper.SetFs(fs)
 	viper.SetEnvPrefix(c.EnvPrefix)
 	viper.SetConfigFile(c.ConfigPath)
@@ -44,6 +43,7 @@ func Init(c *Context) {
 	if err := viper.ReadInConfig(); err != nil {
 		log.Fatalln(err.Error())
 	}
+	rootCmd.Long = fmt.Sprintf("Context: \n%s\nCurrent Config: \n%s", util.ToPrettyJsonString(c), util.ToPrettyJson(viper.AllSettings()))
 }
 
 func Sub(name string, info string, fn func(ctx context.Context) error) {

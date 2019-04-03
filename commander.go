@@ -44,14 +44,13 @@ func Init(c *Context) {
 	if err := viper.ReadInConfig(); err != nil {
 		log.Fatalln(err.Error())
 	}
-	log.Println(viper.ConfigFileUsed())
 }
 
 func Sub(name string, info string, fn func(ctx context.Context) error) {
 	newCtx := context.WithValue(ctx, "settings", viper.AllSettings())
 	rootCmd.AddCommand(&cobra.Command{
 		Use:  name,
-		Long: info,
+		Short: info,
 		Run: func(cmd *cobra.Command, args []string) {
 			if err := fn(newCtx); err != nil {
 				log.Fatalln(errors.WithStack(err))

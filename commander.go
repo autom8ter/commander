@@ -67,3 +67,7 @@ func Execute() error {
 func FS() *afero.Afero {
 	return fs
 }
+
+func Config() *viper.Viper {
+	return viper.GetViper()
+}
